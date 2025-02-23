@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Master - Complete Solution</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background: #1a1a1a;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            color: #fff;
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .menu-btn {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #cce5ff 0%, #a3d5ff 100%);
+            color: black;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        /* Tools Section */
+        .tools-section {
+            padding: 1rem 1rem;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1e293b;
+        }
+
+        .tools-container {
+            display: grid;
+            grid-template-columns: repeat(3, .5fr);
+            gap: .9rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tool-card {
+            padding: .9rem;
+            border-radius: 5px;
+            text-align: left;
+            transition: all 0.3s ease;
+            background: #f7f9f9;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-card h6 {
+            font-size: .9rem;
+            margin: 0 0 1rem 0;
+            color: #1e293b;
+        }
+
+        .tool-card p {
+            font-size: 9px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 5rem 2rem;
+            background: #f1f5f9;
+        }
+
+        .pricing-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1e293b;
+            margin: 1rem 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: #64748b;
+        }
+
+        .features-list {
+            list-style: none;
+            text-align: left;
+            margin: 2rem 0;
+            padding: 0;
+        }
+
+        .features-list li {
+            margin: 0.8rem 0;
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        /* Blog Section */
+        .blog-section {
+            padding: 1rem 1rem;
+            background:white ;
+        }
+
+        .blog-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .blog-card {
+            background: #f1f5f9;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+
+        .blog-image {
+            height: 200px;
+            background: #ddd;
+            overflow: hidden;
+        }
+
+        .blog-content {
+            padding: .9rem;
+        }
+
+        .blog-date {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-content h6 {
+            font-size: .9rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .blog-content p {
+            font-size: 9px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Testimonial Section */
+        .testimonial-section {
+            padding: 5rem 2rem;
+            background: #f3f4f6; /* Light grey background */
+            text-align: center;
+        }
+
+        .testimonial-section p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto 2rem auto;
+            line-height: 1.8;
+        }
+
+        /* Footer Section */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 2rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin: 0.8rem 0;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #3b82f6;
+        }
+
+        .social-media {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-media a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-media a:hover {
+            color: #3b82f6;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #444;
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .navbar h1 {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 100%;
+                background: #1a1a1a;
+                flex-direction: column;
+                transition: 0.3s;
+                padding: 1rem 0;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+                padding: 1rem;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 4rem 1rem;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+                line-height: 1.3;
+            }
+
+            .btn {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .tools-container,
+            .pricing-container,
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .social-media {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .price {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>PDF Master</h1>
+        <div class="nav-links">
+            <a href="#">🏠Home</a>
+            <a href="#">💡Features</a>
+            <a href="#">🏷Pricing</a>
+            <a href="#">📗Blog</a>
+          
+            <a herf="#">🔑login</a>
+            <a href="#" class="btn btn-primary">Sign Up</a>
+        </div>
+        <span class="menu-btn" onclick="toggleMenu()">☰</span>
+    </nav>
+
+    <section class="hero">
+        <h2>Transform Your PDF Workflow</h2>
+        <p>Professional-grade PDF tools with enterprise security</p>
+        <div style="margin-top: 2rem;">
+            <button class="btn btn-primary">Start Free Trial</button>
+            <button class="btn btn-secondary">Watch Demo</button>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section class="tools-section">
+        <h2 class="section-title">Key Features</h2>
+        <div class="tools-container">
+            <div class="tool-card">
+                <div class="tool-icon">🔒</div>
+                <h6>Secure Encryption</h6>
+                <p>256-bit AES encryption with password protection</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">🔄</div>
+                <h6>Smart Conversion</h6>
+                <p>Convert between 15+ file formats</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">✂️</div>
+                <h6>Advanced Editing</h6>
+                <p>Split, merge and reorganize pages</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">📑</div>
+                <h6>PDF Compression</h6>
+                <p>Reduce file size without quality loss</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section">
+        <h2 class="section-title">Simple Pricing Plans</h2>
+        <div class="pricing-container">
+            <div class="pricing-card">
+                <h3>Starter</h3>
+                <div class="price">$9<span>/month</span></div>
+                <ul class="features-list">
+                    <li>Basic PDF Editing</li>
+                    <li>5GB Storage</li>
+                    <li>Email Support</li>
+                    <li>Up to 2 Users</li>
+                </ul>
+                <button class="btn btn-primary">Get Started</button>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Professional</h3>
+                <div class="price">$29<span>/month</span></div>
+                <ul class="features-list">
+                    <li>Advanced PDF Tools</li>
+                    <li>50GB Storage</li>
+                    <li>Priority Support</li>
+                    <li>Up to 10 Users</li>
+                </ul>
+                <button class="btn btn-primary">Try Pro Free</button>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Enterprise</h3>
+                <div class="price">Custom</div>
+                <ul class="features-list">
+                    <li>Unlimited Features</li>
+                    <li>1TB+ Storage</li>
+                    <li>24/7 Support</li>
+                    <li>Custom Solutions</li>
+                </ul>
+                <button class="btn btn-secondary">Contact Sales</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section">
+        <h2 class="section-title">Latest Blogs</h2>
+        <div class="blog-container">
+            <div class="blog-card">
+                <div class="blog-image"></div>
+                <div class="blog-content">
+                  
+                    <h6>Top PDF Management Tips</h6>
+                    <p>Learn how to optimize your PDF workflow with our expert guide...</p>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-image"></div>
+                <div class="blog-content">
+                    <div class="blog-date"></div>
+                    <h6>Security Best Practices</h6>
+                    <p>Essential tips for protecting your PDF documents...</p>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-image"></div>
+                <div class="blog-content">
+                    <div class="blog-date"></div>
+                    <h6>PDF Automation Guide</h6>
+                    <p>Discover how to automate repetitive PDF tasks...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial-section">
+        <h2 class="section-title">Trusted by Thousands</h2>
+        <p>"PDF Master has revolutionized our document workflow. The collaboration features saved us hundreds of hours annually while maintaining strict security standards."</p>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>About Us</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Company</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#">PDF Editing</a></li>
+                    <li><a href="#">PDF Conversion</a></li>
+                    <li><a href="#">PDF Security</a></li>
+                    <li><a href="#">PDF Compression</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Connect With Us</h4>
+                <div class="social-media">
+                    <a href="#">📘</a>
+                    <a href="#">🐦</a>
+                    <a href="#">📸</a>
+                    <a href="#">🔗</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 PDF Master. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
